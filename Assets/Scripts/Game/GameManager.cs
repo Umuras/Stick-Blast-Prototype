@@ -11,13 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private StickSpawner stickSpawner;
     [SerializeField]
-    private int spawnRow = 0;
+    private int spawnRow = 2;
     [SerializeField]
-    private int spawnCol = 0;
+    private int spawnCol = 2;
 
     private void Start()
     {
         gridManager.InitializeGrid();
-        stickSpawner.SpawnStick(spawnRow,spawnCol);
+        stickSpawner.SpawnRandomStick();
     }
 }

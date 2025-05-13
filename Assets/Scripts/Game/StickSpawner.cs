@@ -11,26 +11,35 @@ public class StickSpawner : MonoBehaviour
     private GameObject stickPrefab;
     [SerializeField]
     private int stickLength = 3;
-
-    //Çubugun mümkün olan þekilleri
-    private readonly Vector2Int[] stickDirections =
-    {
-       new Vector2Int(1,0),//Yatay 
-       new Vector2Int(0,1),//Dikey
-    };
+    [SerializeField]
+    private List<GameObject> stickPrefabs;
+    [SerializeField] 
+    private Transform[] spawnPoints;
+    
 
     //Çubugun her kýsmýný spawn et
-    public void SpawnStick(int row, int col)
+    public void SpawnRandomStick()
     {
-        Vector2Int direction = stickDirections[Random.Range(0, stickDirections.Length)];
-
-        for (int i = 0; i < stickLength; i++)
+        if (stickPrefabs == null || stickPrefabs.Count == 0)
         {
-            int x = col + direction.x * i;
-            int y = row + direction.y * i;
-
-            Vector3 localPosition = new Vector3(x, -y, 0); // Grid sistemine uygun (y ekseni ters)
-            Instantiate(stickPrefab, localPosition, Quaternion.identity, gridParent);
+            Debug.LogWarning("Stick prefab listesi boþ.");
+            return;
         }
+
+        //for (int i = 0; i < spawnPoints.Length; i++)
+        //{
+        //    GameObject selectedPrefab = stickPrefabs[Random.Range(0, stickPrefabs.Count)];
+        //    Vector3 localPosition = new Vector3(spawnPoints[i].transform.position.x, spawnPoints[i].transform.position.y, 0); // y eksenini ters çeviriyoruz
+        //    Instantiate(selectedPrefab, localPosition, Quaternion.identity, gridParent);
+        //}
+
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            int randomIndex = Random.Range(0, stickPrefabs.Count);
+            GameObject stick = Instantiate(stickPrefabs[randomIndex], spawnPoints[i]);
+            //stick.transform.localPosition = Vector3.zero; // hizalama
+            //stick.transform.localScale = Vector3.one; // küçültülmüþ görünüm
+        }
+
     }
 }

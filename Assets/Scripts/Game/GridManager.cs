@@ -12,6 +12,8 @@ public class GridManager : MonoBehaviour
     private GameObject cellPrefab;
     [SerializeField]
     private Transform gridParent;
+    [SerializeField]
+    private GameObject nodePrefab;
 
     private Cell[,] grid;
 
@@ -36,6 +38,8 @@ public class GridManager : MonoBehaviour
                 //x columnu yani matristeki x eksenindeki konumu belirtiyor, bu kordinat sisteminde x e denk geliyor, y içinde tam tersi
                 //o yüzden bu şekilde grid dizisine göre ters yazıyoruz.
                 cell.Init(x,y);
+                GameObject node = Instantiate(nodePrefab, new Vector3(x, -y+1, 0), Quaternion.identity, gridParent);
+                node.name = $"Node_{y}_{x}";
             }
         }
     }
